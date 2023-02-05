@@ -25,16 +25,23 @@ fn list_names_func(cx: Scope, cat_names: Vec<&'static str>) -> Vec<View> {
 
 #[component]
 fn ListNames(cx: Scope, cat_names: Vec<&'static str>) -> impl IntoView {
-    let list_items: Vec<_> = cat_names
-        .into_iter()
-        .map(move |name| view! {cx, <li>{name}</li>})
-        .collect();
-
     view! {cx,
         <h1>"Great cat names (component)"</h1>
         <ul>
-            {list_items}
+            <For
+                each={move || cat_names.clone()}
+                key={|name| name.clone()}
+                view={
+                    move |name| {
+                        view! {
+                            cx,
+                            <li>{name}</li>
+                        }
+                    }
+                }
+            />
         </ul>
+
     }
 }
 
