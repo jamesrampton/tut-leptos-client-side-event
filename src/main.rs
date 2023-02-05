@@ -6,7 +6,7 @@ fn main() {
             cx,
             <h1>"Hello, world!"</h1>
             <NiceAffirmation />
-            <LuckyNumber />
+            <LuckyNumber the_lucky_number=43 />
         }
     });
 }
@@ -19,8 +19,7 @@ pub fn NiceAffirmation(cx: Scope) -> impl IntoView {
     }
 }
 #[component]
-fn LuckyNumber(cx: Scope) -> impl IntoView {
-    let the_lucky_number = 42;
+fn LuckyNumber(cx: Scope, the_lucky_number: i32) -> impl IntoView {
     view! {
         cx,
         <p>"Today's lucky number is " {the_lucky_number}</p>
