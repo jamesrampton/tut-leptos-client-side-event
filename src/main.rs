@@ -1,16 +1,39 @@
 use leptos::*;
 
-fn main() {
-    let cat_names_func = vec!["Beans", "Basil", "Oliver", "Funcy"];
-    let cat_names = vec!["Beans", "Basil", "Oliver", "Compy"];
+#[derive(Clone)]
+struct Cat {
+    name: String,
+    rating: u8,
+}
 
+fn main() {
+    let cat_names = vec!["Beans", "Basil", "Oliver", "Funcy"];
+
+    let cats = vec![
+        Cat {
+            name: "Beans".to_string(),
+            rating: 1,
+        },
+        Cat {
+            name: "Basil".to_string(),
+            rating: 2,
+        },
+        Cat {
+            name: "Oliver".to_string(),
+            rating: 3,
+        },
+        Cat {
+            name: "Compy".to_string(),
+            rating: 4,
+        },
+    ];
     mount_to_body(|cx| {
         view! { cx,
             <h1>"Great cat names (func)"</h1>
             <ul>
-                {list_names_func(cx,cat_names_func)}
+                {list_names_func(cx,cat_names)}
             </ul>
-            <ListNames cat_names />
+            <ListNames cats />
         }
     })
 }
@@ -24,18 +47,18 @@ fn list_names_func(cx: Scope, cat_names: Vec<&'static str>) -> Vec<View> {
 }
 
 #[component]
-fn ListNames(cx: Scope, cat_names: Vec<&'static str>) -> impl IntoView {
+fn ListNames(cx: Scope, cats: Vec<Cat>) -> impl IntoView {
     view! {cx,
         <h1>"Great cat names (component)"</h1>
         <ul>
             <For
-                each={move || cat_names.clone()}
-                key={|name| name.clone()}
+                each={move || cats.clone()}
+                key={|cat| cat.rating}
                 view={
-                    move |name| {
+                    move |cat| {
                         view! {
                             cx,
-                            <li>{name}</li>
+                            <li id={cat.rating}>{cat.name}</li>
                         }
                     }
                 }
