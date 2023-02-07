@@ -28,7 +28,14 @@ fn main() {
         },
     ];
     mount_to_body(|cx| {
+        let loves_cats = true;
         view! { cx,
+            <Show
+                when=move || loves_cats
+                fallback=|_cx| view!{cx,"You'll hate these names:"}
+            >
+                "Yay! You'll love these names:"
+            </Show>
             <h1>"Great cat names (func)"</h1>
             <ul>
                 {list_names_func(cx,cat_names)}
